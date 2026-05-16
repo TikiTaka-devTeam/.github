@@ -1,6 +1,6 @@
-# TikiTech-devTeam
+# TikiTaka-devTeam
 
-TikiTech-devTeam은 TikiTaka 웹 서비스를 개발하는 팀입니다.
+TikiTaka-devTeam은 TikiTaka 웹 서비스를 개발하는 팀입니다.
 
 ## Tech Stack
 
