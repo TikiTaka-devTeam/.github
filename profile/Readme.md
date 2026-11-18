@@ -165,19 +165,10 @@
 
 Cloudflare Pages에서 React·Vite 빌드 결과물을 제공합니다. 사용자의 브라우저에서 실행되는 프론트엔드가 백엔드에 REST 요청을 보내고 실시간 필기 메시지를 주고받습니다.
 
-아래는 서비스 구성 요소와 연결 관계를 요약한 개념도입니다. Python AI 서비스와 Spring Boot는 현재 단일 EC2에서 운영하며, 인증서·프록시·포트 등 세부 네트워크 설정은 배포 문서에서 관리합니다.
+아래는 서비스 구성 요소와 연결 관계를 요약한 개념도입니다. Python AI 서비스와 Spring Boot는 현재 동일한 EC2 인스턴스 하나에서 운영하며, 인증서·프록시·포트 등 세부 네트워크 설정은 배포 문서에서 관리합니다.
 
-```mermaid
-flowchart TB
-    pages["Cloudflare Pages"] -->|"프론트엔드 정적 파일"| browser["브라우저 · React + Vite"]
-    browser <-->|"REST · WebSocket/STOMP"| nginx["Nginx"]
-    subgraph ec2["AWS EC2 · 단일 서버"]
-        nginx <--> spring["Spring Boot"]
-        spring <-->|"내부 API"| ai["Python AI Service"]
-    end
-    spring <-->|"서비스 데이터"| db["RDS · PostgreSQL"]
-    spring <-->|"강의자료 · 이미지 · 음성"| s3["Amazon S3"]
-```
+<img width="1726" height="838" alt="tikitaka-초기버전아키텍처" src="https://github.com/user-attachments/assets/7e55b354-4c0c-4273-9d3a-1b966bff0409" />
+
 
 ### 대규모 운영을 위한 확장 설계
 
@@ -189,6 +180,9 @@ flowchart TB
 | Backend | Spring Boot 서버 이중화 및 인스턴스 사양 확장 | 처리 용량 확대 및 단일 서버 의존도 완화 |
 | 실시간 메시지 | RabbitMQ 외부 STOMP 브로커 연계 | 서로 다른 서버에 연결된 사용자 간 필기 전달 |
 | AI Service | 별도 실행 자원으로 분리 | AI 처리 부하와 강의 서비스 부하 분리 |
+
+<img width="2082" height="1203" alt="tikitaka-확장버전아키텍처" src="https://github.com/user-attachments/assets/5b0c8cef-5938-48a1-a33e-bf28ef5544de" />
+
 
 ## 핵심 설계
 
